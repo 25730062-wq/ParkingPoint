@@ -1,6 +1,0 @@
-[
-  {"id":"ss-01","name":"성수 공영주차장","area":"성수동","distance":"450m","fee":"5분당 200원","available":18,"lat":37.5445,"lng":127.0560},
-  {"id":"sf-02","name":"서울숲 공영주차장","area":"서울숲","distance":"760m","fee":"5분당 200원","available":32,"lat":37.5446,"lng":127.0429},
-  {"id":"gd-03","name":"건대입구 공영주차장","area":"건대입구","distance":"610m","fee":"5분당 250원","available":11,"lat":37.5404,"lng":127.0707},
-  {"id":"ws-04","name":"왕십리 공영주차장","area":"왕십리","distance":"520m","fee":"5분당 200원","available":7,"lat":37.5610,"lng":127.0376}
-]
