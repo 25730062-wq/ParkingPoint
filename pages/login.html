@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#ffffff">
+  <title>로그인 | Parking Point</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <script src="../data/mock-data.js" defer></script>
+  <script src="../js/app.js" defer></script>
+</head>
+<body data-page="login" data-prefix="../">
+  <div class="app-shell" id="app">
+    <!-- 공통 헤더와 하단 내비게이션도 HTML에서 직접 수정할 수 있습니다. -->
+    <header class="site-header" id="siteHeader"><a class="brand" href="../index.html" aria-label="Parking Point 홈"><span class="brand-mark">P</span><span class="brand-words"><strong>Parking Point</strong><small>서울시 공영주차장 · Mock 서비스</small></span></a><button class="icon-button" type="button" data-action="menu" aria-label="메뉴 열기" aria-expanded="false" aria-controls="menuOverlay"><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button></header>
+    <main id="main-content" tabindex="-1">
+      <div class="pagebar"><a class="backlink" id="pageBack" href="../index.html" aria-label="이전 화면"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></a><strong>로그인</strong><span class="pagebar-spacer"></span></div>
+      <section class="auth-header"><span class="auth-logo">P</span><h1>다시 만나 반가워요</h1><p>예약 및 내역 관리를 위해 로그인해 주세요.</p></section>
+      <form id="loginForm" class="form-stack">
+        <!-- STEP 3: 신규 사용자는 이메일, 기존 v4 사용자는 기존 아이디로 로그인할 수 있습니다. -->
+        <label>이메일 또는 기존 아이디<input name="username" type="text" placeholder="이메일 또는 기존 아이디" autocomplete="username" required></label>
+        <label>비밀번호<input name="password" type="password" placeholder="비밀번호를 입력하세요" autocomplete="current-password" required></label>
+        <p class="form-error" id="loginError" role="alert"></p>
+        <button class="btn primary" type="submit">로그인 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 14 0m-6-6 6 6-6 6"/></svg></button>
+      </form>
+      <div class="auth-links"><button type="button" class="text-link" data-action="account-find">아이디 찾기</button><button type="button" class="text-link" data-action="account-reset">비밀번호 재설정</button></div>
+      <!-- TODO (확인 필요): 기존 v4의 계정 찾기/재설정은 이름·연락처 방식입니다.
+           이번 신규 회원가입은 연락처를 받지 않으므로 신규 이메일 계정에는 복구 기능이 적용되지 않습니다.
+           별도 복구 정책이 지정되지 않아 기존 시연용 UI/JS는 임의로 변경하지 않았습니다. -->
+      <!-- 시연용 계정 복구: 실제 서버 기반 계정 복구 기능은 아닙니다. -->
+      <div id="accountHelp" class="help-box" hidden><h2 id="recoverHeading">계정 찾기 (시연)</h2><form id="recoverForm" class="form-stack"><input type="hidden" name="kind" value="account-find"><label>이름<input name="name" required placeholder="가입한 이름"></label><label>연락처<input name="phone" required placeholder="가입한 연락처"></label><div id="resetFields" hidden><label>아이디<input name="username" placeholder="가입한 아이디"></label><label>새 비밀번호<input name="password" type="password" minlength="8" placeholder="8자 이상"></label></div><p class="form-error" id="recoverError" role="alert"></p><button type="submit" class="btn outline">확인</button></form></div>
+      <a class="btn outline mt" href="signup.html">회원가입</a>
+      <button class="btn demo-login mt" type="button" data-action="demo-login">체험 계정으로 시작하기</button>
+      <a class="text-link center-link" href="map.html">로그인 없이 둘러보기 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 14 0m-6-6 6 6-6 6"/></svg></a>
+      <p class="mock-note">안내: 주차장·위치·잔여 면수·요금은 과제 시연용 가상 데이터입니다.</p>
+    </main>
+    <nav class="bottom-nav" id="bottomNav" aria-label="주요 메뉴"><a class="nav-item " href="../index.html" ><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 10 9-7 9 7v10H3z"/><path d="M9 20v-7h6v7"/></svg><span>홈</span></a><a class="nav-item " href="../pages/map.html" ><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 6 6-3 6 3 6-3v15l-6 3-6-3-6 3zM9 3v15M15 6v15"/></svg><span>지도</span></a><a class="nav-item " href="../pages/reserve.html" ><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 2v6M17 2v6M3 10h18"/></svg><span>예약</span></a><a class="nav-item " href="../pages/my.html" ><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-5 3-8 8-8s8 3 8 8"/></svg><span>마이</span></a></nav>
+    <div class="menu-overlay" id="menuOverlay" hidden>
+      <div class="menu-scrim" data-action="close-menu" aria-hidden="true"></div>
+      <aside class="menu-sheet" id="menuSheet" role="dialog" aria-modal="true" aria-labelledby="menuTitle" tabindex="-1">
+        <div class="menu-header">
+          <h2 id="menuTitle">전체 서비스</h2>
+          <button type="button" data-action="close-menu" id="menuCloseButton" class="icon-button" aria-label="전체 메뉴 닫기">×</button>
+        </div>
+        <nav class="menu-links" aria-label="전체 서비스 바로가기">
+          <p class="menu-group-title">주차장 탐색</p>
+          <a href="../index.html">홈</a>
+          <a href="../pages/map.html">지도에서 주차장 찾기</a>
+          <p class="menu-group-title">예약 서비스</p>
+          <a href="../pages/reserve.html">주차면 예약하기</a>
+          <a href="../pages/my.html">내 예약 확인 · 취소</a>
+          <a href="../pages/favorites.html">즐겨찾기</a>
+          <p class="menu-group-title">계정</p>
+          <a href="../pages/login.html" id="menuLogin">로그인</a>
+          <a href="../pages/signup.html" id="menuSignup">회원가입</a>
+          <button type="button" data-action="logout" id="menuLogout" hidden>로그아웃</button>
+        </nav>
+        <!-- TODO: 예약 상세·현장 이용은 예약 ID가 필요하므로 '내 예약 확인'에서 접근합니다. -->
+      </aside>
+    </div>
+    <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+  </div>
+</body>
+</html>

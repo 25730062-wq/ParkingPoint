@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#ffffff">
+  <title>이용 중 | Parking Point</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <script src="../data/mock-data.js" defer></script>
+  <script src="../js/app.js" defer></script>
+</head>
+<body data-page="active" data-prefix="../">
+  <div class="app-shell" id="app">
+    <!-- 공통 헤더와 하단 내비게이션도 HTML에서 직접 수정할 수 있습니다. -->
+    <header class="site-header" id="siteHeader"><a class="brand" href="../index.html" aria-label="Parking Point 홈"><span class="brand-mark">P</span><span class="brand-words"><strong>Parking Point</strong><small>서울시 공영주차장 · Mock 서비스</small></span></a><button class="icon-button" type="button" data-action="menu" aria-label="메뉴 열기" aria-expanded="false" aria-controls="menuOverlay"><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button></header>
+    <main id="main-content" tabindex="-1">
+      <div class="pagebar"><a class="backlink" id="pageBack" href="../pages/my.html" aria-label="이전 화면"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></a><strong>이용 중</strong><span class="pagebar-spacer"></span></div>
+      <div id="activeView" hidden>
+        <section class="active-top"><p>현재 이용 중 · 시연</p><h1 id="remainingTime">00:00</h1><small>종료까지 남은 시간 (시연용)</small><div class="summary-split"><span id="activeStart">—</span><span id="activeEnd">—</span></div></section>
+        <div class="receipt slim"><p class="eyebrow">내 주차 위치</p><div class="section-top"><h2 id="activeSlot">—</h2><button class="text-link" data-action="navigation" id="activeNavigation">주차 위치 보기 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 14 0m-6-6 6 6-6 6"/></svg></button></div><p id="activeFloor">—</p><div class="receipt-row"><small>예약 예상 요금</small><strong id="activeFee">—</strong></div><div class="receipt-row"><small>차량번호</small><strong id="activePlate">—</strong></div></div>
+        <div class="notice-box">종료 시간은 예약 내역 기준으로 표시합니다. 실제 입출차 감지 및 알림은 제공하지 않습니다.</div>
+        <div class="button-stack"><button class="btn outline" data-action="extend" id="activeExtend">이용 시간 30분 연장 가능 여부 확인</button><button class="btn primary" data-action="checkout" id="activeCheckout">이용 종료 시연</button></div>
+      </div>
+      <div id="activeMissing" hidden><div class="empty"><div class="empty-graphic"><svg width="35" height="35" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg></div><h2>이용 정보를 찾을 수 없어요</h2><p>마이페이지에서 예약 내역을 확인해 주세요.</p><a class="btn outline" href="../pages/my.html">예약 내역 <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 14 0m-6-6 6 6-6 6"/></svg></a></div></div>
+      <p class="mock-note">안내: 주차장·위치·잔여 면수·요금은 과제 시연용 가상 데이터입니다.</p>
+    </main>
+    <nav class="bottom-nav" id="bottomNav" aria-label="주요 메뉴"><a class="nav-item " href="../index.html" ><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 10 9-7 9 7v10H3z"/><path d="M9 20v-7h6v7"/></svg><span>홈</span></a><a class="nav-item " href="../pages/map.html" ><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 6 6-3 6 3 6-3v15l-6 3-6-3-6 3zM9 3v15M15 6v15"/></svg><span>지도</span></a><a class="nav-item selected" href="../pages/reserve.html" aria-current="page"><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 2v6M17 2v6M3 10h18"/></svg><span>예약</span></a><a class="nav-item " href="../pages/my.html" ><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-5 3-8 8-8s8 3 8 8"/></svg><span>마이</span></a></nav>
+    <div class="menu-overlay" id="menuOverlay" hidden>
+      <div class="menu-scrim" data-action="close-menu" aria-hidden="true"></div>
+      <aside class="menu-sheet" id="menuSheet" role="dialog" aria-modal="true" aria-labelledby="menuTitle" tabindex="-1">
+        <div class="menu-header">
+          <h2 id="menuTitle">전체 서비스</h2>
+          <button type="button" data-action="close-menu" id="menuCloseButton" class="icon-button" aria-label="전체 메뉴 닫기">×</button>
+        </div>
+        <nav class="menu-links" aria-label="전체 서비스 바로가기">
+          <p class="menu-group-title">주차장 탐색</p>
+          <a href="../index.html">홈</a>
+          <a href="../pages/map.html">지도에서 주차장 찾기</a>
+          <p class="menu-group-title">예약 서비스</p>
+          <a href="../pages/reserve.html">주차면 예약하기</a>
+          <a href="../pages/my.html">내 예약 확인 · 취소</a>
+          <a href="../pages/favorites.html">즐겨찾기</a>
+          <p class="menu-group-title">계정</p>
+          <a href="../pages/login.html" id="menuLogin">로그인</a>
+          <a href="../pages/signup.html" id="menuSignup">회원가입</a>
+          <button type="button" data-action="logout" id="menuLogout" hidden>로그아웃</button>
+        </nav>
+        <!-- TODO: 예약 상세·현장 이용은 예약 ID가 필요하므로 '내 예약 확인'에서 접근합니다. -->
+      </aside>
+    </div>
+    <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+  </div>
+</body>
+</html>

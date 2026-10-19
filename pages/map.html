@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#ffffff">
+  <title>지도 검색 | Parking Point</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <script src="../data/mock-data.js" defer></script>
+  <script src="../js/app.js" defer></script>
+</head>
+<body data-page="map" data-prefix="../">
+  <div class="app-shell" id="app">
+    <!-- 공통 헤더와 하단 내비게이션도 HTML에서 직접 수정할 수 있습니다. -->
+    <header class="site-header" id="siteHeader"><a class="brand" href="../index.html" aria-label="Parking Point 홈"><span class="brand-mark">P</span><span class="brand-words"><strong>Parking Point</strong><small>서울시 공영주차장 · Mock 서비스</small></span></a><button class="icon-button" type="button" data-action="menu" aria-label="메뉴 열기" aria-expanded="false" aria-controls="menuOverlay"><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button></header>
+    <main id="main-content" tabindex="-1">
+      <div class="pagebar"><a class="backlink" id="pageBack" href="../index.html" aria-label="이전 화면"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></a><strong>검색 · 지도</strong><span class="pagebar-spacer"></span></div>
+      <section class="map-tools">
+        <form id="mapSearch" class="map-search">
+          <label class="field-search"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg><input type="search" name="q" id="mapQuery" placeholder="목적지 또는 지역" aria-label="목적지 검색"><button class="clear-field" type="button" data-action="clear-map" aria-label="검색어 지우기">×</button></label>
+          <button class="sr-only" type="submit">검색</button>
+        </form>
+        <div class="filter-row"><button class="filter on" type="button" data-action="sort" data-sort="distance" aria-pressed="true">거리순</button><button class="filter" type="button" data-action="sort" data-sort="fee" aria-pressed="false">요금순</button><button class="filter" type="button" data-action="free" aria-pressed="false">여유만</button></div>
+      </section>
+      <section class="fake-map" id="fakeMap" aria-label="서울 지역의 시연용 좌표 지도">
+        <div class="map-scene" id="mapScene">
+          <svg class="map-illustration" viewBox="0 0 400 340" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="400" height="340" fill="#eeeeee"/><g fill="#e4e4e4" stroke="#d1d1d1" stroke-width="1"><rect x="14" y="20" width="96" height="63" rx="5"/><rect x="134" y="18" width="96" height="56" rx="5"/><rect x="264" y="16" width="120" height="64" rx="5"/><rect x="12" y="110" width="110" height="71" rx="5"/><rect x="147" y="100" width="82" height="84" rx="5"/><rect x="257" y="103" width="126" height="80" rx="5"/><rect x="17" y="213" width="98" height="104" rx="5"/><rect x="138" y="210" width="101" height="100" rx="5"/><rect x="260" y="210" width="126" height="106" rx="5"/></g><g stroke="#ffffff" stroke-width="19" fill="none"><path d="M0 91L400 92"/><path d="M0 196L400 198"/><path d="M124 0L125 340"/><path d="M246 0L246 340"/><path d="M-20 316L418 8"/></g><g stroke="#bababa" stroke-width="1" fill="none"><path d="M0 91L400 92M0 196L400 198M124 0L125 340M246 0L246 340M-20 316L418 8"/></g><g font-family="sans-serif" font-size="10" fill="#888"><text x="33" y="57">주거 지역</text><text x="285" y="51">공공시설</text><text x="155" y="242">근린 상가</text><text x="20" y="279">주차 구역</text><text x="275" y="275">업무 지역</text></g></svg>
+          <!-- 지도 마커만 JS에서 Mock Data 기반으로 생성합니다. -->
+          <div id="mapPins" class="map-pin-layer"></div>
+        </div>
+        <span id="mapOrigin" class="map-origin"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0z"/><circle cx="12" cy="10" r="2.5"/></svg> 기준 위치</span>
+        <div class="map-controls"><button type="button" data-action="map-zoom-in" aria-label="지도 확대">+</button><button type="button" data-action="map-zoom-out" aria-label="지도 축소">−</button><button type="button" data-action="map-reset" aria-label="지도 원래 크기">⌖</button></div>
+        <span class="map-label">시연용 지도 · 실제 도로 및 경로 아님</span>
+      </section>
+      <div class="map-selection" id="mapSelection" hidden>
+        <div class="map-selection-top"><span class="badge" id="mapSelectedCongestion">보통</span><button type="button" class="map-selection-close" aria-label="선택 해제" data-action="map-dismiss">×</button></div>
+        <div class="map-selection-info"><strong id="mapSelectedName">선택한 주차장</strong><small id="mapSelectedMeta"></small></div>
+        <div class="inline-actions"><a class="btn outline" id="mapSelectedDetail" href="detail.html">상세 정보</a><a class="btn primary" id="mapSelectedReserve" href="reserve.html">예약하기</a></div>
+      </div>
+      <section class="map-results">
+        <div class="section-top"><h2>주변 주차장</h2><strong id="mapCount">0곳</strong></div>
+        <p class="hint" id="mapDescription">Mock Data 기준 직선거리 · 마커를 누르면 상세 비교 가능</p>
+        <div class="card-stack" id="mapList"><p class="hint">검색 결과를 불러오는 중입니다.</p></div>
+      </section>
+      <p class="mock-note">안내: 주차장·위치·잔여 면수·요금은 과제 시연용 가상 데이터입니다.</p>
+    </main>
+    <nav class="bottom-nav" id="bottomNav" aria-label="주요 메뉴"><a class="nav-item " href="../index.html" ><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 10 9-7 9 7v10H3z"/><path d="M9 20v-7h6v7"/></svg><span>홈</span></a><a class="nav-item selected" href="../pages/map.html" aria-current="page"><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 6 6-3 6 3 6-3v15l-6 3-6-3-6 3zM9 3v15M15 6v15"/></svg><span>지도</span></a><a class="nav-item " href="../pages/reserve.html" ><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 2v6M17 2v6M3 10h18"/></svg><span>예약</span></a><a class="nav-item " href="../pages/my.html" ><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-5 3-8 8-8s8 3 8 8"/></svg><span>마이</span></a></nav>
+    <div class="menu-overlay" id="menuOverlay" hidden>
+      <div class="menu-scrim" data-action="close-menu" aria-hidden="true"></div>
+      <aside class="menu-sheet" id="menuSheet" role="dialog" aria-modal="true" aria-labelledby="menuTitle" tabindex="-1">
+        <div class="menu-header">
+          <h2 id="menuTitle">전체 서비스</h2>
+          <button type="button" data-action="close-menu" id="menuCloseButton" class="icon-button" aria-label="전체 메뉴 닫기">×</button>
+        </div>
+        <nav class="menu-links" aria-label="전체 서비스 바로가기">
+          <p class="menu-group-title">주차장 탐색</p>
+          <a href="../index.html">홈</a>
+          <a href="../pages/map.html">지도에서 주차장 찾기</a>
+          <p class="menu-group-title">예약 서비스</p>
+          <a href="../pages/reserve.html">주차면 예약하기</a>
+          <a href="../pages/my.html">내 예약 확인 · 취소</a>
+          <a href="../pages/favorites.html">즐겨찾기</a>
+          <p class="menu-group-title">계정</p>
+          <a href="../pages/login.html" id="menuLogin">로그인</a>
+          <a href="../pages/signup.html" id="menuSignup">회원가입</a>
+          <button type="button" data-action="logout" id="menuLogout" hidden>로그아웃</button>
+        </nav>
+        <!-- TODO: 예약 상세·현장 이용은 예약 ID가 필요하므로 '내 예약 확인'에서 접근합니다. -->
+      </aside>
+    </div>
+    <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+  </div>
+</body>
+</html>
