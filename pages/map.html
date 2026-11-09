@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1,viewport-fit=cover" name="viewport"/>
+<meta content="#ffffff" name="theme-color"/>
+<title>지도 검색 | Parking Point</title>
+<link href="../css/style.css" rel="stylesheet"/>
+<!-- 카카오맵 JavaScript SDK (키: Parking Point Web / 등록 도메인에서만 동작) -->
+<script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=a0d93327506d1868a1b0bbbd5c824ae6&amp;libraries=services&amp;autoload=false"></script>
+<script defer="" src="../data/parking-data.js"></script>
+<script defer="" src="../js/app.js"></script>
+</head>
+<body data-page="map" data-prefix="../">
+<div class="app-shell" id="app">
+<!-- 공통 헤더와 하단 내비게이션도 HTML에서 직접 수정할 수 있습니다. -->
+<header class="site-header" id="siteHeader"><a aria-label="Parking Point 홈" class="brand" href="../index.html"><span class="brand-mark">P</span><span class="brand-words"><strong>Parking Point</strong><small>서울시 주차장 표준데이터</small></span></a><button aria-controls="menuOverlay" aria-expanded="false" aria-label="메뉴 열기" class="icon-button" data-action="menu" type="button"><svg aria-hidden="true" fill="none" height="23" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.65" viewbox="0 0 24 24" width="23"><path d="M4 6h16M4 12h16M4 18h16"></path></svg></button></header>
+<main id="main-content" tabindex="-1">
+<section aria-label="주차장 위치 지도" class="fake-map" id="fakeMap">
+<!-- 카카오 지도가 로드되면 여기에 표시되고, 아래 시연용 SVG 지도는 숨겨집니다. -->
+<div class="kakao-map" hidden="" id="kakaoMap"></div>
+<div class="map-scene" id="mapScene">
+<svg aria-hidden="true" class="map-illustration" preserveaspectratio="xMidYMid slice" viewbox="0 0 400 340"><rect fill="#eeeeee" height="340" width="400"></rect><g fill="#e4e4e4" stroke="#d1d1d1" stroke-width="1"><rect height="63" rx="5" width="96" x="14" y="20"></rect><rect height="56" rx="5" width="96" x="134" y="18"></rect><rect height="64" rx="5" width="120" x="264" y="16"></rect><rect height="71" rx="5" width="110" x="12" y="110"></rect><rect height="84" rx="5" width="82" x="147" y="100"></rect><rect height="80" rx="5" width="126" x="257" y="103"></rect><rect height="104" rx="5" width="98" x="17" y="213"></rect><rect height="100" rx="5" width="101" x="138" y="210"></rect><rect height="106" rx="5" width="126" x="260" y="210"></rect></g><g fill="none" stroke="#ffffff" stroke-width="19"><path d="M0 91L400 92"></path><path d="M0 196L400 198"></path><path d="M124 0L125 340"></path><path d="M246 0L246 340"></path><path d="M-20 316L418 8"></path></g><g fill="none" stroke="#bababa" stroke-width="1"><path d="M0 91L400 92M0 196L400 198M124 0L125 340M246 0L246 340M-20 316L418 8"></path></g><g fill="#888" font-family="sans-serif" font-size="10"><text x="33" y="57">주거 지역</text><text x="285" y="51">공공시설</text><text x="155" y="242">근린 상가</text><text x="20" y="279">주차 구역</text><text x="275" y="275">업무 지역</text></g></svg>
+<!-- 지도 마커만 JS에서 표준데이터 기반으로 생성합니다. -->
+<div class="map-pin-layer" id="mapPins"></div>
+</div>
+<span class="map-origin" id="mapOrigin"><svg aria-hidden="true" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.65" viewbox="0 0 24 24" width="16"><path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0z"></path><circle cx="12" cy="10" r="2.5"></circle></svg> 기준 위치</span>
+<div class="map-controls"><button aria-label="지도 확대" data-action="map-zoom-in" type="button">+</button><button aria-label="지도 축소" data-action="map-zoom-out" type="button">−</button><button aria-label="지도 원래 크기" data-action="map-reset" type="button">⌖</button></div>
+<span class="map-label">시연용 지도 · 실제 도로 및 경로 아님</span>
+<button aria-label="현재 위치로 이동" class="map-my-location" data-action="map-my-location" title="현재 위치" type="button">⌖</button></section>
+<!-- 지도 마커를 누르면 뜨는 주차장 정보 창: 이름 · 주소 · 현재 자리 · 기본 요금 · [예약하기] [취소] -->
+<div aria-labelledby="mapSelectedName" aria-modal="true" class="map-popup" hidden="" id="mapSelection" role="dialog"><div aria-hidden="true" class="menu-scrim" data-action="map-dismiss"></div><div class="map-popup-box"><strong id="mapSelectedName">선택한 주차장</strong><small id="mapSelectedMeta"></small><dl class="map-popup-rows"><div><dt>현재 자리</dt><dd id="mapSelectedSeats">—</dd></div><div><dt>기본 요금</dt><dd id="mapSelectedFee">—</dd></div></dl><div class="locate-actions"><a class="btn primary" href="reserve.html" id="mapSelectedReserve">예약하기</a><button class="btn outline" data-action="map-dismiss" type="button">취소</button></div></div></div>
+<div aria-labelledby="mapExtName" aria-modal="true" class="map-popup" hidden="" id="mapExt" role="dialog"><div aria-hidden="true" class="menu-scrim" data-ext-close=""></div><div class="map-popup-box"><strong id="mapExtName">주차장</strong><small id="mapExtMeta"></small><dl class="map-popup-rows"><div><dt>현재 자리</dt><dd id="mapExtSeats">—</dd></div><div><dt>기본 요금</dt><dd id="mapExtFee">—</dd></div></dl><div class="locate-actions"><a class="btn primary" href="reserve.html" id="mapExtLink">예약하기</a><button class="btn outline" data-ext-close="" id="mapExtClose" type="button">취소</button></div></div></div>
+</main>
+<nav aria-label="주요 메뉴" class="bottom-nav" id="bottomNav"><a class="nav-item" href="../index.html"><svg aria-hidden="true" fill="none" height="23" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.65" viewbox="0 0 24 24" width="23"><path d="m3 10 9-7 9 7v10H3z"></path><path d="M9 20v-7h6v7"></path></svg><span>홈</span></a><a aria-current="page" class="nav-item selected" href="../pages/map.html"><svg aria-hidden="true" fill="none" height="23" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.65" viewbox="0 0 24 24" width="23"><path d="m3 6 6-3 6 3 6-3v15l-6 3-6-3-6 3zM9 3v15M15 6v15"></path></svg><span>지도</span></a><a class="nav-item" href="../pages/reserve.html"><svg aria-hidden="true" fill="none" height="23" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.65" viewbox="0 0 24 24" width="23"><rect height="16" rx="2" width="18" x="3" y="5"></rect><path d="M7 2v6M17 2v6M3 10h18"></path></svg><span>예약</span></a><a class="nav-item" href="../pages/my.html"><svg aria-hidden="true" fill="none" height="23" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.65" viewbox="0 0 24 24" width="23"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c0-5 3-8 8-8s8 3 8 8"></path></svg><span>마이</span></a></nav>
+<div class="menu-overlay" hidden="" id="menuOverlay">
+<div aria-hidden="true" class="menu-scrim" data-action="close-menu"></div>
+<aside aria-labelledby="menuTitle" aria-modal="true" class="menu-sheet" id="menuSheet" role="dialog" tabindex="-1">
+<div class="menu-header">
+<h2 id="menuTitle">전체 서비스</h2>
+<button aria-label="전체 메뉴 닫기" class="icon-button" data-action="close-menu" id="menuCloseButton" type="button">×</button>
+</div>
+<nav aria-label="전체 서비스 바로가기" class="menu-links">
+<p class="menu-group-title">주차장 탐색</p>
+<a href="../index.html">홈</a>
+<a href="../pages/map.html">지도에서 주차장 찾기</a>
+<p class="menu-group-title">예약 서비스</p>
+<a href="../pages/reserve.html">주차면 예약하기</a>
+<a href="../pages/my.html">내 예약 확인 · 취소</a>
+<a href="../pages/favorites.html">즐겨찾기</a>
+<p class="menu-group-title">계정</p>
+<a href="../pages/login.html" id="menuLogin">로그인</a>
+<a href="../pages/signup.html" id="menuSignup">회원가입</a>
+<button data-action="logout" hidden="" id="menuLogout" type="button">로그아웃</button>
+</nav>
+<!-- TODO: 예약 상세·현장 이용은 예약 ID가 필요하므로 '내 예약 확인'에서 접근합니다. -->
+</aside>
+</div>
+<div aria-live="polite" class="toast" hidden="" id="toast" role="status"></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1,viewport-fit=cover" name="viewport"/>
+<meta content="#ffffff" name="theme-color"/>
+<title>홈 | Parking Point</title>
+<link href="css/style.css" rel="stylesheet"/>
+<script defer="" src="data/parking-data.js"></script>
+<script defer="" src="js/app.js"></script>
+</head>
+<body data-page="home" data-prefix="">
+<div class="app-shell" id="app">
+<!-- 공통 헤더와 하단 내비게이션도 HTML에서 직접 수정할 수 있습니다. -->
+<header class="site-header" id="siteHeader"><a aria-label="Parking Point 홈" class="brand" href="index.html"><span class="brand-mark">P</span><span class="brand-words"><strong>Parking Point</strong><small>서울시 주차장 표준데이터</small></span></a><button aria-controls="menuOverlay" aria-expanded="false" aria-label="메뉴 열기" class="icon-button" data-action="menu" type="button"><svg aria-hidden="true" fill="none" height="23" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.65" viewbox="0 0 24 24" width="23"><path d="M4 6h16M4 12h16M4 18h16"></path></svg></button></header>
+<main id="main-content" tabindex="-1">
+<section class="hero">
+<p class="eyebrow">서울시 공영주차장 스마트 예약·관리</p>
+<h1>주차장을<br/>빠르게 찾아보세요</h1>
+<p>목적지 근처 주차장의 위치와 요금을<br/>확인하고 시연 예약을 이용해 보세요.</p>
+<button aria-label="내 위치로 가까운 주차장 찾기" class="hero-search-btn" data-action="home-locate" type="button"><svg aria-hidden="true" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg></button></section>
+<!-- 검색 버튼을 누르면 위치 정보 사용 동의를 묻습니다. 동의 → 내 위치 기준 가까운 주차장 / 아니요 → 예약 화면 -->
+<div aria-labelledby="locateTitle" aria-modal="true" class="locate-dialog" hidden="" id="locateDialog" role="dialog"><div aria-hidden="true" class="menu-scrim" data-action="locate-close"></div><div class="locate-box"><h2 id="locateTitle">내 위치 정보를 사용할까요?</h2><p>현재 위치에서 가장 가까운 주차장을 찾아드려요.<br/>아니요를 누르면 예약 화면으로 이동해요.</p><div class="locate-actions"><button class="btn primary" data-action="locate-yes" type="button">네</button><button class="btn outline" data-action="locate-no" type="button">아니요</button></div></div></div>
+
+<section class="section">
+<div class="section-top"><h2>추천 주차장</h2></div>
+<div class="card-stack" id="homeFavorites"></div>
+</section>
+</main>
+<nav aria-label="주요 메뉴" class="bottom-nav" id="bottomNav"><a aria-current="page" class="nav-item selected" href="index.html"><svg aria-hidden="true" fill="none" height="23" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.65" viewbox="0 0 24 24" width="23"><path d="m3 10 9-7 9 7v10H3z"></path><path d="M9 20v-7h6v7"></path></svg><span>홈</span></a><a class="nav-item" href="pages/map.html"><svg aria-hidden="true" fill="none" height="23" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.65" viewbox="0 0 24 24" width="23"><path d="m3 6 6-3 6 3 6-3v15l-6 3-6-3-6 3zM9 3v15M15 6v15"></path></svg><span>지도</span></a><a class="nav-item" href="pages/reserve.html"><svg aria-hidden="true" fill="none" height="23" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.65" viewbox="0 0 24 24" width="23"><rect height="16" rx="2" width="18" x="3" y="5"></rect><path d="M7 2v6M17 2v6M3 10h18"></path></svg><span>예약</span></a><a class="nav-item" href="pages/my.html"><svg aria-hidden="true" fill="none" height="23" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.65" viewbox="0 0 24 24" width="23"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c0-5 3-8 8-8s8 3 8 8"></path></svg><span>마이</span></a></nav>
+<div class="menu-overlay" hidden="" id="menuOverlay">
+<div aria-hidden="true" class="menu-scrim" data-action="close-menu"></div>
+<aside aria-labelledby="menuTitle" aria-modal="true" class="menu-sheet" id="menuSheet" role="dialog" tabindex="-1">
+<div class="menu-header">
+<h2 id="menuTitle">전체 서비스</h2>
+<button aria-label="전체 메뉴 닫기" class="icon-button" data-action="close-menu" id="menuCloseButton" type="button">×</button>
+</div>
+<nav aria-label="전체 서비스 바로가기" class="menu-links">
+<p class="menu-group-title">주차장 탐색</p>
+<a href="index.html">홈</a>
+<a href="pages/map.html">지도에서 주차장 찾기</a>
+<p class="menu-group-title">예약 서비스</p>
+<a href="pages/reserve.html">주차면 예약하기</a>
+<a href="pages/my.html">내 예약 확인 · 취소</a>
+<a href="pages/favorites.html">즐겨찾기</a>
+<p class="menu-group-title">계정</p>
+<a href="pages/login.html" id="menuLogin">로그인</a>
+<a href="pages/signup.html" id="menuSignup">회원가입</a>
+<button data-action="logout" hidden="" id="menuLogout" type="button">로그아웃</button>
+</nav>
+<!-- TODO: 예약 상세·현장 이용은 예약 ID가 필요하므로 '내 예약 확인'에서 접근합니다. -->
+</aside>
+</div>
+<div aria-live="polite" class="toast" hidden="" id="toast" role="status"></div>
+</div>
+</body>
+</html>
