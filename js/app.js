@@ -49,13 +49,26 @@
     return path+(q.size?'?'+q.toString():'');
   };
   const go=(route,params={})=>{location.href=link(route,params);};
-  const read=(key,defaultValue)=>{try{const v=JSON.parse(localStorage.getItem(key));return v===null?defaultValue:v;}catch{return defaultValue;}};
+  // 저장된 데이터가 손상되거나 예상한 자료형과 다르면 기본값으로 복구합니다.
+  const read=(key,defaultValue)=>{
+    try{
+      const raw=localStorage.getItem(key);
+      if(raw===null)return defaultValue;
+      const value=JSON.parse(raw);
+      if(value===null)return defaultValue;
+      if(Array.isArray(defaultValue)&&!Array.isArray(value))return defaultValue;
+      if(defaultValue!==null&&typeof defaultValue==='object'&&!Array.isArray(defaultValue)&&
+         (typeof value!=='object'||Array.isArray(value)))return defaultValue;
+      return value;
+    }catch{return defaultValue;}
+  };
   const write=(key,value)=>{try{localStorage.setItem(key,JSON.stringify(value));return true;}catch{toast('브라우저 저장 공간을 사용할 수 없습니다.');return false;}};
   const sessionRead=(key,fallback)=>{try{const v=JSON.parse(sessionStorage.getItem(key));return v===null?fallback:v;}catch{return fallback;}};
   const sessionWrite=(key,value)=>{try{sessionStorage.setItem(key,JSON.stringify(value));return true;}catch{return false;}};
   const safe=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const session=()=>read(KEYS.session,null);
-  const favorites=()=>read(KEYS.favorites,[]);
+  // 존재하는 주차장의 문자열 ID만 즐겨찾기로 인식합니다.
+  const favorites=()=>read(KEYS.favorites,[]).filter(id=>typeof id==='string'&&!!lotBy(id));
   const reservations=()=>read(KEYS.reservations,[]);
   const pad=n=>String(n).padStart(2,'0');
   const dateString=d=>`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
